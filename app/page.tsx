@@ -39,8 +39,12 @@ export default function Home() {
       clearTimeout(t2)
 
       if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error ?? 'Something went wrong. Please try again.')
+        let message = 'Something went wrong. Please try again.'
+        try {
+          const data = await res.json()
+          if (data.error) message = data.error
+        } catch { /* non-JSON error body — keep default message */ }
+        throw new Error(message)
       }
 
       const data: PipelineResult = await res.json()

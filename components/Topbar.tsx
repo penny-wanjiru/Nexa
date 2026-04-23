@@ -1,6 +1,7 @@
 'use client'
 
 import { useAuth, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Topbar() {
   const { isSignedIn } = useAuth()
@@ -30,6 +31,7 @@ export function Topbar() {
       </nav>
 
       <div className="topbar-right">
+        <ThemeToggle />
         {isSignedIn ? (
           <UserButton />
         ) : (

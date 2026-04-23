@@ -42,6 +42,10 @@ export default function RootLayout({
         lang="en"
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${unbounded.variable} h-full antialiased`}
       >
+        <head>
+          {/* Runs before hydration to prevent flash of wrong theme */}
+          <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('theme'),s=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||s)}catch(e){}` }} />
+        </head>
         <body className="min-h-full flex flex-col">{children}</body>
       </html>
     </ClerkProvider>
