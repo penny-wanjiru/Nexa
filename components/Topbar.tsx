@@ -26,7 +26,7 @@ export function Topbar() {
 
       <nav className="topnav">
         <a href="#">Tailor</a>
-        <a href="#">History</a>
+        <a href="/history">History</a>
         <a href="#">Help</a>
       </nav>
 

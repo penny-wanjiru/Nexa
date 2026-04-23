@@ -37,7 +37,16 @@ export const TailoredCVSchema = z.object({
   })),
 })
 
+export const EvaluationSchema = z.object({
+  ats_score: z.number().min(0).max(100),
+  keyword_coverage: z.number().min(0).max(100),
+  tone_score: z.number().min(0).max(100),
+  overall: z.number().min(0).max(100),
+  suggestions: z.array(z.string()),
+})
+
 export type ExtractedJob = z.infer<typeof ExtractedJobSchema>
 export type AnalysisResult = z.infer<typeof AnalysisResultSchema>
 export type GeneratedOutput = z.infer<typeof GeneratedOutputSchema>
 export type TailoredCV = z.infer<typeof TailoredCVSchema>
+export type Evaluation = z.infer<typeof EvaluationSchema>

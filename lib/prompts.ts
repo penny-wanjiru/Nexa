@@ -73,6 +73,39 @@ Gap Analysis (JSON):
 ${analysis}
 `.trim()
 
+export const evaluatorPrompt = (cv: string, jobDescription: string, output: string, tailoredCV: string) => `
+You are an expert ATS analyst and career coach. Evaluate the quality of the generated job application materials.
+
+Score each dimension from 0–100:
+- ats_score: How well the tailored CV will pass ATS screening (keyword density, formatting, structure)
+- keyword_coverage: Percentage of key job requirements addressed in the materials
+- tone_score: Professionalism and alignment of tone with the target role
+- overall: Holistic quality score for the complete application package
+
+Provide exactly 2–3 concrete, actionable improvement suggestions.
+
+Return ONLY valid JSON — no markdown, no explanation — matching this exact structure:
+{
+  "ats_score": 0,
+  "keyword_coverage": 0,
+  "tone_score": 0,
+  "overall": 0,
+  "suggestions": []
+}
+
+Original CV:
+${cv}
+
+Job Description:
+${jobDescription}
+
+Generated Materials (JSON):
+${output}
+
+Tailored CV (JSON):
+${tailoredCV}
+`.trim()
+
 export const generatorPrompt = (cv: string, analysis: string) => `
 You are a professional CV and cover letter writer.
 

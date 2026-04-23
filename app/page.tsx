@@ -5,6 +5,7 @@ import { Topbar } from '@/components/Topbar'
 import { InputPhase } from '@/components/InputPhase'
 import { ResultsPhase } from '@/components/ResultsPhase'
 import type { PipelineResult } from '@/types'
+import { saveApplication } from '@/lib/history'
 
 type Phase = 'input' | 'loading' | 'results'
 
@@ -49,6 +50,7 @@ export default function Home() {
 
       const data: PipelineResult = await res.json()
       setResult(data)
+      saveApplication(data)
       setProgressStep(3)
       setPhase('results')
     } catch (err) {

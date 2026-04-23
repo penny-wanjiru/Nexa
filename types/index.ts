@@ -12,13 +12,6 @@ export interface TailoredCV {
   education: { degree: string; institution: string; dates: string }[]
 }
 
-export interface PipelineResult {
-  extracted: ExtractedJob
-  analysis: AnalysisResult
-  output: GeneratedOutput
-  tailoredCV: TailoredCV
-}
-
 export interface ExtractedJob {
   skills: string[]
   responsibilities: string[]
@@ -36,4 +29,20 @@ export interface GeneratedOutput {
   cv_bullet_points: string[]
   cover_letter: string
   fit_summary: string
+}
+
+export interface Evaluation {
+  ats_score: number
+  keyword_coverage: number
+  tone_score: number
+  overall: number
+  suggestions: string[]
+}
+
+export interface PipelineResult {
+  extracted: ExtractedJob
+  analysis: AnalysisResult
+  output: GeneratedOutput
+  tailoredCV: TailoredCV
+  evaluation: Evaluation
 }
