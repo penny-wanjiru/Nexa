@@ -19,6 +19,25 @@ export const GeneratedOutputSchema = z.object({
   fit_summary: z.string(),
 })
 
+export const TailoredCVSchema = z.object({
+  name: z.string(),
+  contact: z.string(),
+  summary: z.string(),
+  experience: z.array(z.object({
+    role: z.string(),
+    company: z.string(),
+    dates: z.string(),
+    bullets: z.array(z.string()),
+  })),
+  skills: z.array(z.string()),
+  education: z.array(z.object({
+    degree: z.string(),
+    institution: z.string(),
+    dates: z.string(),
+  })),
+})
+
 export type ExtractedJob = z.infer<typeof ExtractedJobSchema>
 export type AnalysisResult = z.infer<typeof AnalysisResultSchema>
 export type GeneratedOutput = z.infer<typeof GeneratedOutputSchema>
+export type TailoredCV = z.infer<typeof TailoredCVSchema>

@@ -1,6 +1,6 @@
-import { ExtractedJobSchema, AnalysisResultSchema, GeneratedOutputSchema } from './schemas'
-import type { ExtractedJob, AnalysisResult, GeneratedOutput } from './schemas'
-import { extractorPrompt, analyzerPrompt, generatorPrompt } from './prompts'
+import { ExtractedJobSchema, AnalysisResultSchema, GeneratedOutputSchema, TailoredCVSchema } from './schemas'
+import type { ExtractedJob, AnalysisResult, GeneratedOutput, TailoredCV } from './schemas'
+import { extractorPrompt, analyzerPrompt, generatorPrompt, cvPrompt } from './prompts'
 
 async function callModel(prompt: string): Promise<string> {
   const baseUrl = process.env.OPENROUTER_BASE_URL
@@ -69,9 +69,13 @@ export async function runPipeline(cv: string, jobDescription: string) {
   const analysisRaw = await callModel(analyzerPrompt(cv, JSON.stringify(extracted, null, 2)))
   const analysis: AnalysisResult = parseAndValidate(analysisRaw, AnalysisResultSchema)
 
-  // Step 3: Generate tailored outputs
+  // Step 3: Generate tailored outputs (bullets, cover letter, fit summary)
   const outputRaw = await callModel(generatorPrompt(cv, JSON.stringify(analysis, null, 2)))
   const output: GeneratedOutput = parseAndValidate(outputRaw, GeneratedOutputSchema)
 
-  return { extracted, analysis, output }
+  // Step 4: Generate full tailored CV
+  const cvRaw = await callModel(cvPrompt(cv, JSON.stringify(extracted, null, 2), JSON.stringify(analysis, null, 2)))
+  const tailoredCV: TailoredCV = parseAndValidate(cvRaw, TailoredCVSchema)
+
+  return { extracted, analysis, output, tailoredCV }
 }

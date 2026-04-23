@@ -4,6 +4,7 @@ import { FitSummaryCard } from './FitSummaryCard'
 import { GapAnalysisCard } from './GapAnalysisCard'
 import { BulletsCard } from './BulletsCard'
 import { CoverLetterCard } from './CoverLetterCard'
+import { TailoredCVCard } from './TailoredCVCard'
 
 interface ResultsPhaseProps {
   result: PipelineResult | null
@@ -57,6 +58,10 @@ export function ResultsPhase({ result, progressStep, loading, onReset }: Results
         />
         <CoverLetterCard
           coverLetter={result?.output.cover_letter ?? ''}
+          loading={loading}
+        />
+        <TailoredCVCard
+          tailoredCV={result?.tailoredCV ?? null}
           loading={loading}
         />
       </div>

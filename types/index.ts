@@ -3,10 +3,20 @@ export interface AnalyzeRequest {
   jobDescription: string
 }
 
+export interface TailoredCV {
+  name: string
+  contact: string
+  summary: string
+  experience: { role: string; company: string; dates: string; bullets: string[] }[]
+  skills: string[]
+  education: { degree: string; institution: string; dates: string }[]
+}
+
 export interface PipelineResult {
   extracted: ExtractedJob
   analysis: AnalysisResult
   output: GeneratedOutput
+  tailoredCV: TailoredCV
 }
 
 export interface ExtractedJob {
