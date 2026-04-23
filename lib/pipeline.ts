@@ -3,11 +3,18 @@ import { ExtractedJobSchema, AnalysisResultSchema, GeneratedOutputSchema } from 
 import type { ExtractedJob, AnalysisResult, GeneratedOutput } from './schemas'
 import { extractorPrompt, analyzerPrompt, generatorPrompt } from './prompts'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const openai = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: process.env.OPENROUTER_BASE_URL ?? 'https://openrouter.ai/api/v1',
+  defaultHeaders: {
+    'HTTP-Referer': 'https://nexa.app',
+    'X-Title': 'Nexa',
+  },
+})
 
 async function callModel(prompt: string): Promise<string> {
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'openai/gpt-4o-mini',
     messages: [{ role: 'user', content: prompt }],
     response_format: { type: 'json_object' },
     temperature: 0.3,
