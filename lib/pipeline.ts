@@ -1,4 +1,5 @@
 import { AgentCoordinator } from './coordinator'
+import { langfuse } from './observability'
 import * as extractor from './agents/extractor'
 import * as analyzer from './agents/analyzer'
 import * as generator from './agents/generator'
@@ -19,7 +20,14 @@ const tools = {
 }
 
 export async function runPipeline(cv: string, jobDescription: string) {
-  const coord = new AgentCoordinator(tools)
+  const trace = langfuse.trace({
+    name: 'nexa-pipeline',
+    input: { cv: cv.slice(0, 500), jobDescription: jobDescription.slice(0, 500) },
+    tags: ['pipeline'],
+  })
+  console.info('[langfuse] trace created:', trace.id)
+
+  const coord = new AgentCoordinator(tools, trace)
 
   // Step 1 — extract job requirements
   const extracted = await coord.dispatch<{ jobDescription: string }, ExtractedJob>(
@@ -46,6 +54,15 @@ export async function runPipeline(cv: string, jobDescription: string) {
     { cv: string; jobDescription: string; output: GeneratedOutput; tailoredCV: TailoredCV },
     Evaluation
   >('evaluate-quality', { cv, jobDescription, output, tailoredCV })
+
+  trace.update({
+    output: {
+      ats_score: evaluation.ats_score,
+      keyword_coverage: evaluation.keyword_coverage,
+      tone_score: evaluation.tone_score,
+      overall: evaluation.overall,
+    },
+  })
 
   console.info('[pipeline] dispatch log:', coord.log.map(e => `${e.tool} ${e.durationMs}ms`).join(', '))
 

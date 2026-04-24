@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const ExtractedJobSchema = z.object({
+  company: z.string(),
   skills: z.array(z.string()),
   responsibilities: z.array(z.string()),
   keywords: z.array(z.string()),

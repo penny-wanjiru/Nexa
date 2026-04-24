@@ -18,6 +18,7 @@ describe('extractorPrompt', () => {
 
   it('specifies the required JSON structure', () => {
     const prompt = extractorPrompt('any jd')
+    expect(prompt).toContain('"company"')
     expect(prompt).toContain('"skills"')
     expect(prompt).toContain('"responsibilities"')
     expect(prompt).toContain('"keywords"')

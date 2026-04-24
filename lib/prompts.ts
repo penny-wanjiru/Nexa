@@ -3,10 +3,13 @@ Extract key requirements from the following job description.
 
 Return ONLY valid JSON — no markdown, no explanation — matching this exact structure:
 {
+  "company": "",
   "skills": [],
   "responsibilities": [],
   "keywords": []
 }
+
+If the company name is not mentioned, return an empty string for "company".
 
 Job Description:
 ${jobDescription}

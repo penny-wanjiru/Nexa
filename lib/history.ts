@@ -4,6 +4,7 @@ export interface HistoryEntry {
   id: string
   date: string
   jobTitle: string
+  company: string
   atsScore: number
   result: PipelineResult
 }
@@ -39,6 +40,7 @@ export function saveApplication(result: PipelineResult): void {
     id: generateId(),
     date: new Date().toISOString(),
     jobTitle: extractJobTitle(result),
+    company: result.extracted.company,
     atsScore: result.evaluation.overall,
     result,
   }

@@ -41,7 +41,9 @@ export default function HistoryPage() {
           History
         </h2>
         <p style={{ color: 'var(--ink-mute)', fontSize: '14px', margin: '0 0 32px' }}>
-          Past analyses saved locally in your browser.
+          {entries.length > 0
+            ? `${entries.length} application${entries.length === 1 ? '' : 's'} analysed so far.`
+            : 'Your tailored applications, all in one place.'}
         </p>
 
         {entries.length === 0 ? (
@@ -53,7 +55,7 @@ export default function HistoryPage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13.5px' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--line)' }}>
-                  {['Date', 'Top keyword', 'Overall score', ''].map(h => (
+                  {['Date', 'Company', 'Role', 'Overall score', ''].map(h => (
                     <th key={h} style={{
                       padding: '12px 20px', textAlign: 'left',
                       fontSize: '11px', fontWeight: 600, letterSpacing: '0.06em',
@@ -73,6 +75,9 @@ export default function HistoryPage() {
                   >
                     <td style={{ padding: '14px 20px', color: 'var(--ink-mute)', whiteSpace: 'nowrap' }}>
                       {formatDate(entry.date)}
+                    </td>
+                    <td style={{ padding: '14px 20px', color: 'var(--ink)' }}>
+                      {entry.company || '—'}
                     </td>
                     <td style={{ padding: '14px 20px', color: 'var(--ink)' }}>
                       {entry.jobTitle}
