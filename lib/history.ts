@@ -9,7 +9,7 @@ export interface HistoryEntry {
   result: PipelineResult
 }
 
-const STORAGE_KEY = 'nexa_history'
+const storageKey = (userId: string) => `nexa_history_${userId}`
 const MAX_ENTRIES = 50
 
 function generateId(): string {
@@ -23,10 +23,10 @@ function extractJobTitle(result: PipelineResult): string {
   return title.length > 48 ? title.slice(0, 48) + '…' : title
 }
 
-export function getHistory(): HistoryEntry[] {
+export function getHistory(userId: string): HistoryEntry[] {
   if (typeof window === 'undefined') return []
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(storageKey(userId))
     if (!raw) return []
     return JSON.parse(raw) as HistoryEntry[]
   } catch {
@@ -34,7 +34,7 @@ export function getHistory(): HistoryEntry[] {
   }
 }
 
-export function saveApplication(result: PipelineResult): void {
+export function saveApplication(result: PipelineResult, userId: string): void {
   if (typeof window === 'undefined') return
   const entry: HistoryEntry = {
     id: generateId(),
@@ -44,14 +44,14 @@ export function saveApplication(result: PipelineResult): void {
     atsScore: result.evaluation.overall,
     result,
   }
-  const existing = getHistory()
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([entry, ...existing].slice(0, MAX_ENTRIES)))
+  const existing = getHistory(userId)
+  localStorage.setItem(storageKey(userId), JSON.stringify([entry, ...existing].slice(0, MAX_ENTRIES)))
 }
 
-export function deleteEntry(id: string): void {
+export function deleteEntry(id: string, userId: string): void {
   if (typeof window === 'undefined') return
   localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(getHistory().filter(e => e.id !== id))
+    storageKey(userId),
+    JSON.stringify(getHistory(userId).filter(e => e.id !== id))
   )
 }

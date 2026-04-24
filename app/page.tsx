@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useUser } from '@clerk/nextjs'
 import { Topbar } from '@/components/Topbar'
 import { InputPhase } from '@/components/InputPhase'
 import { ResultsPhase } from '@/components/ResultsPhase'
@@ -10,6 +11,7 @@ import { saveApplication } from '@/lib/history'
 type Phase = 'input' | 'loading' | 'results'
 
 export default function Home() {
+  const { user } = useUser()
   const [phase, setPhase]               = useState<Phase>('input')
   const [progressStep, setProgressStep] = useState(0)
   const [cv, setCv]                     = useState('')
@@ -50,7 +52,7 @@ export default function Home() {
 
       const data: PipelineResult = await res.json()
       setResult(data)
-      saveApplication(data)
+      if (user?.id) saveApplication(data, user.id)
       setProgressStep(3)
       setPhase('results')
     } catch (err) {

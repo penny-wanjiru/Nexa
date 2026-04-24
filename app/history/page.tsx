@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useUser } from '@clerk/nextjs'
 import { Topbar } from '@/components/Topbar'
 import { getHistory, deleteEntry } from '@/lib/history'
 import type { HistoryEntry } from '@/lib/history'
@@ -18,14 +19,16 @@ function scoreColor(n: number) {
 }
 
 export default function HistoryPage() {
+  const { user } = useUser()
   const [entries, setEntries] = useState<HistoryEntry[]>([])
 
   useEffect(() => {
-    setEntries(getHistory())
-  }, [])
+    if (user?.id) setEntries(getHistory(user.id))
+  }, [user?.id])
 
   function handleDelete(id: string) {
-    deleteEntry(id)
+    if (!user?.id) return
+    deleteEntry(id, user.id)
     setEntries(prev => prev.filter(e => e.id !== id))
   }
 
