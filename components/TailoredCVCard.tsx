@@ -221,7 +221,6 @@ export function TailoredCVCard({ tailoredCV, loading }: TailoredCVCardProps) {
         <div className="cv-viewport">
           <div className="cv-paper">
 
-            {/* Header */}
             <div style={{ marginBottom: 22, paddingBottom: 16, borderBottom: '2px solid #1a1a1a' }}>
               <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.02em', color: '#0f0f0f', marginBottom: 5, lineHeight: 1.1 }}>
                 {tailoredCV.name}
@@ -231,7 +230,6 @@ export function TailoredCVCard({ tailoredCV, loading }: TailoredCVCardProps) {
               </div>
             </div>
 
-            {/* Summary */}
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: '#444', paddingBottom: 5, marginBottom: 10, borderBottom: '1px solid #ccc' }}>
                 Professional Summary
@@ -239,7 +237,6 @@ export function TailoredCVCard({ tailoredCV, loading }: TailoredCVCardProps) {
               <p style={{ margin: 0, color: '#2a2a2a', fontSize: 13, lineHeight: 1.6 }}>{tailoredCV.summary}</p>
             </div>
 
-            {/* Experience */}
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: '#444', paddingBottom: 5, marginBottom: 10, borderBottom: '1px solid #ccc' }}>
                 Experience
@@ -263,7 +260,6 @@ export function TailoredCVCard({ tailoredCV, loading }: TailoredCVCardProps) {
               ))}
             </div>
 
-            {/* Skills */}
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: '#444', paddingBottom: 5, marginBottom: 10, borderBottom: '1px solid #ccc' }}>
                 Skills
@@ -271,7 +267,6 @@ export function TailoredCVCard({ tailoredCV, loading }: TailoredCVCardProps) {
               <p style={{ margin: 0, color: '#2a2a2a', fontSize: 13, lineHeight: 1.8 }}>{tailoredCV.skills.join(' · ')}</p>
             </div>
 
-            {/* Education */}
             {tailoredCV.education.length > 0 && (
               <div>
                 <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: '#444', paddingBottom: 5, marginBottom: 10, borderBottom: '1px solid #ccc' }}>

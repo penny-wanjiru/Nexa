@@ -29,17 +29,14 @@ export async function runPipeline(cv: string, jobDescription: string) {
 
   const coord = new AgentCoordinator(tools, trace)
 
-  // Step 1 — extract job requirements
   const extracted = await coord.dispatch<{ jobDescription: string }, ExtractedJob>(
     'extract-requirements', { jobDescription }
   )
 
-  // Step 2 — analyse CV against requirements
   const analysis = await coord.dispatch<{ cv: string; extracted: ExtractedJob }, AnalysisResult>(
     'analyze-fit', { cv, extracted }
   )
 
-  // Steps 3+4 — generate materials and rewrite CV in parallel (both only need analysis)
   const [output, tailoredCV] = await Promise.all([
     coord.dispatch<{ cv: string; analysis: AnalysisResult }, GeneratedOutput>(
       'generate-materials', { cv, analysis }
@@ -49,7 +46,6 @@ export async function runPipeline(cv: string, jobDescription: string) {
     ),
   ])
 
-  // Step 5 — LLM-as-Judge evaluates the generated materials
   const evaluation = await coord.dispatch<
     { cv: string; jobDescription: string; output: GeneratedOutput; tailoredCV: TailoredCV },
     Evaluation
