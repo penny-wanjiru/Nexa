@@ -25,9 +25,9 @@ export function Topbar() {
       </a>
 
       <nav className="topnav">
-        <a href="#">Tailor</a>
+        <a href="/">Tailor</a>
         <a href="/history">History</a>
-        <a href="#">Help</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); window.location.href = 'mailto:nexa@gmail.com' }}>Help</a>
       </nav>
 
       <div className="topbar-right">
