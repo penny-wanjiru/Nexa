@@ -118,4 +118,4 @@ npm test
 
 ## Deployed to Vercel
 
-
+https://nexa-opal.vercel.app/
