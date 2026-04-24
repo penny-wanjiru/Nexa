@@ -116,21 +116,6 @@ npm test
 
 ---
 
-## Deploying to Vercel
+## Deployed to Vercel
 
-```bash
-npm i -g vercel
-vercel
-```
 
-Add the environment variables above in the Vercel dashboard under **Settings → Environment Variables**, or pull them locally with:
-
-```bash
-vercel env pull .env.local
-```
-
-For production:
-
-```bash
-vercel --prod
-```
