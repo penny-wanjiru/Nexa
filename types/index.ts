@@ -13,6 +13,7 @@ export interface TailoredCV {
 }
 
 export interface ExtractedJob {
+  company: string
   skills: string[]
   responsibilities: string[]
   keywords: string[]
