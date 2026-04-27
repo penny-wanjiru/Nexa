@@ -455,7 +455,3 @@ Deployed to Vercel at https://nexa-opal.vercel.app/.
 | **Observability** | Cost dashboards in Langfuse — per-run and per-user spend tracking |
 
 ---
-
-## License
-
-MIT
