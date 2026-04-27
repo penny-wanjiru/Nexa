@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useAuth, useUser, useClerk } from '@clerk/nextjs'
 import { Topbar } from '@/components/Topbar'
 import { InputPhase } from '@/components/InputPhase'
 import { ResultsPhase } from '@/components/ResultsPhase'
@@ -11,7 +11,9 @@ import { saveApplication } from '@/lib/history'
 type Phase = 'input' | 'loading' | 'results'
 
 export default function Home() {
+  const { isSignedIn } = useAuth()
   const { user } = useUser()
+  const { redirectToSignIn } = useClerk()
   const [phase, setPhase]               = useState<Phase>('input')
   const [progressStep, setProgressStep] = useState(0)
   const [cv, setCv]                     = useState('')
@@ -20,6 +22,7 @@ export default function Home() {
   const [error, setError]               = useState<string | null>(null)
 
   const handleAnalyse = useCallback(async () => {
+    if (!isSignedIn) { redirectToSignIn(); return }
     if (!cv.trim() || !jobDescription.trim()) return
 
     setProgressStep(0)
@@ -61,7 +64,7 @@ export default function Home() {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
       setPhase('input')
     }
-  }, [cv, jobDescription])
+  }, [cv, jobDescription, isSignedIn, redirectToSignIn, user?.id])
 
   return (
     <>
